@@ -1,0 +1,284 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and store information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "storeName": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Vegetable category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "name": { "type": "string" },
+        "icon": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "businessId", "name"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Vegetable item or bundle product",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "type": { "type": "string", "enum": ["SINGLE", "BUNDLE"] },
+        "baseUnit": { "type": "string" },
+        "purchaseCost": { "type": "number" },
+        "sellingPrice": { "type": "number" },
+        "currentStock": { "type": "number" },
+        "minStock": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "bundleItems": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "businessId", "name", "category", "type", "baseUnit", "purchaseCost", "sellingPrice", "isActive"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "Completed or cancelled POS sales transaction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "receiptNumber": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "finalTotal": { "type": "number" },
+        "totalCost": { "type": "number" },
+        "grossProfit": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["CASH", "TRANSFER"] },
+        "paymentAmount": { "type": "number" },
+        "change": { "type": "number" },
+        "status": { "type": "string", "enum": ["COMPLETED", "CANCELLED"] },
+        "cashierUid": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "businessId", "receiptNumber", "items", "finalTotal", "totalCost", "status", "paymentMethod"]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "description": "Stock purchase transaction from suppliers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "purchaseNumber": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "date": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "notes": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "businessId", "purchaseNumber", "items", "totalAmount"]
+    },
+    "InventoryMovement": {
+      "title": "InventoryMovement",
+      "description": "Audit log for every stock addition, deduction, waste, or reversal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "type": { "type": "string", "enum": ["STOCK_IN", "STOCK_OUT", "BUNDLE_OUT", "WASTE", "ADJUSTMENT", "SALE_REVERSAL"] },
+        "quantity": { "type": "number" },
+        "unit": { "type": "string" },
+        "previousStock": { "type": "number" },
+        "newStock": { "type": "number" },
+        "referenceId": { "type": "string" },
+        "reason": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "businessId", "productId", "type", "quantity", "unit", "previousStock", "newStock"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Operational expense records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "expenseNumber": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "description": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "businessId", "category", "amount", "date", "description"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Vegetable and ingredient suppliers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "notes": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "businessId", "name", "isActive"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer online vegetable order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "totalPayment": { "type": "number" },
+        "totalCost": { "type": "number" },
+        "deliveryAddress": { "type": "object" },
+        "distanceKm": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["TRANSFER", "QRIS", "COD"] },
+        "paymentStatus": { "type": "string", "enum": ["UNPAID", "PENDING", "PAID", "FAILED", "REFUNDED", "CANCELLED"] },
+        "orderStatus": { "type": "string", "enum": ["ORDER_RECEIVED", "CONFIRMED", "PREPARING", "READY_FOR_PICKUP", "ON_DELIVERY", "DELIVERED", "CANCELLED", "DELIVERY_FAILED", "RETURNED"] },
+        "paymentProofUrl": { "type": "string" },
+        "paymentVerifiedAt": { "type": "string" },
+        "courier": { "type": "object" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "businessId", "orderNumber", "customerId", "items", "totalPayment", "paymentMethod", "paymentStatus", "orderStatus"]
+    },
+    "CustomerAddress": {
+      "title": "CustomerAddress",
+      "description": "Saved delivery address for customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "label": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "phone": { "type": "string" },
+        "addressDetails": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "notes": { "type": "string" },
+        "isDefault": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "customerId", "label", "recipientName", "phone", "addressDetails", "latitude", "longitude"]
+    },
+    "DeliveryRateConfig": {
+      "title": "DeliveryRateConfig",
+      "description": "Store delivery and shipping fee configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessId": { "type": "string" },
+        "storeLatitude": { "type": "number" },
+        "storeLongitude": { "type": "number" },
+        "storeAddress": { "type": "string" },
+        "maxRadiusKm": { "type": "number" },
+        "freeShippingMinAmount": { "type": "number" },
+        "rates": { "type": "array" }
+      },
+      "required": ["id", "businessId", "storeLatitude", "storeLongitude"]
+    },
+    "OrderStatusHistory": {
+      "title": "OrderStatusHistory",
+      "description": "Audit log for every status transition of an order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "previousStatus": { "type": "string" },
+        "newStatus": { "type": "string" },
+        "description": { "type": "string" },
+        "updatedBy": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "orderId", "newStatus", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Vegetable categories"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Vegetables and bundle products"
+    },
+    "/sales/{saleId}": {
+      "schema": "Sale",
+      "description": "Point of sale transaction records"
+    },
+    "/purchases/{purchaseId}": {
+      "schema": "Purchase",
+      "description": "Supplier purchase records"
+    },
+    "/inventory_movements/{movementId}": {
+      "schema": "InventoryMovement",
+      "description": "Detailed stock ledger and audit trail"
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Operational expenses"
+    },
+    "/suppliers/{supplierId}": {
+      "schema": "Supplier",
+      "description": "Supplier contacts"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer online orders"
+    },
+    "/customer_addresses/{addressId}": {
+      "schema": "CustomerAddress",
+      "description": "Customer delivery locations"
+    },
+    "/delivery_rates/{configId}": {
+      "schema": "DeliveryRateConfig",
+      "description": "Delivery distance rates and store coordinates"
+    },
+    "/order_status_history/{historyId}": {
+      "schema": "OrderStatusHistory",
+      "description": "Order status update history audit"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Test connection
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Categories
+    match /categories/{categoryId} {
+      allow read, write: if true;
+    }
+
+    // Products (Public read for customers to view catalog and prices)
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Sales (POS)
+    match /sales/{saleId} {
+      allow read, write: if true;
+    }
+
+    // Purchases
+    match /purchases/{purchaseId} {
+      allow read, write: if true;
+    }
+
+    // Inventory Movements (Audit log)
+    match /inventory_movements/{movementId} {
+      allow read, create: if true;
+      allow update, delete: if false;
+    }
+
+    // Expenses
+    match /expenses/{expenseId} {
+      allow read, write: if true;
+    }
+
+    // Suppliers
+    match /suppliers/{supplierId} {
+      allow read, write: if true;
+    }
+
+    // Orders (Online Ordering)
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Customer Delivery Addresses
+    match /customer_addresses/{addressId} {
+      allow read, write: if true;
+    }
+
+    // Delivery Rates & Store Coordinates
+    match /delivery_rates/{configId} {
+      allow read, write: if true;
+    }
+
+    // Order Status History (Audit trail)
+    match /order_status_history/{historyId} {
+      allow read, create: if true;
+      allow update, delete: if false;
+    }
+  }
+}
